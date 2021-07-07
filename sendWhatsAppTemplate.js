@@ -20,6 +20,7 @@ function onOpen() {
       "to": to,
       "from":fromID,
       "type": "hsm",
+      "reportURL": "--------Change this to be your Webhook for your FlowBuilder Flow-------",
       "content": {
         "hsm": {
           "namespace": namespace,
@@ -40,14 +41,7 @@ function onOpen() {
       }
     };
     payload = JSON.stringify(payload);
-    Logger.log(payload);
-    //var payload = {
-    //  "originator": 'MIKESMS',
-    //  "recipients": to,
-    //  "type":"flash",
-    //  "body": "Hi " + name
-    //};
-  
+
     var options = {
       "method" : "post",
       "payload" : payload
@@ -67,7 +61,6 @@ function onOpen() {
    
     var ui = SpreadsheetApp.getUi();
     var result = ui.prompt("Please enter your Access Token");
-    Logger.log(result.getResponseText());
     var authToken=result.getResponseText();
         
     //
@@ -90,7 +83,6 @@ function onOpen() {
             
              Logger.log('Sending SMS to ' + row[0]);
             response_data = sendSms(row[0],row[1],row[2],row[3],row[4],row[5],authToken);
-            Logger.log(response_data);
             status = JSON.parse(response_data);
             sheet.getRange(startRow + Number(i), 7).setValue(status.id);
             sheet.getRange(startRow + Number(i), 8).setValue(status.status);
